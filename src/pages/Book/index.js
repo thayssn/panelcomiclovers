@@ -22,7 +22,7 @@ class Book extends Component {
       <BookContainer>
         <article className="book" key={book.id}>
           <div className="book__thumbnail">
-            <img src={`http://localhost:3333/${book.thumbnail}`} alt="" className="book__thumbnail" />
+            <img src={`http://paperball.com.br:3333/${book.thumbnail}`} alt="" className="book__thumbnail" />
           </div>
           <div className="book__info">
             <div className="book__title">{book.title}</div>
