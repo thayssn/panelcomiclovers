@@ -74,7 +74,7 @@ class CreateBook extends Component {
 
     try {
       await api.post('books', data);
-      history.push('/');
+      history.push('/books');
     } catch (err) {
       alert('Houve um erro ao cadastrar o livro.');
     }
