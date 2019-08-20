@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
+import env from '../../env';
 
 // using styled-components
 import BooksList from './style';
@@ -28,7 +29,7 @@ class Books extends Component {
         { books.map(book => (
           <article className="book" key={book.id}>
             <div className="book__thumbnail">
-              <img src={`http://paperball.com.br:3333/${book.thumbnail}`} alt="" className="book__thumbnail" />
+              { book.thumbnail && <img src={`${env.baseUrl}/${book.thumbnail}`} alt="" className="book__thumbnail" />}
             </div>
             <div className="book__info">
               <div className="book__title"><Link to={`/books/${book.id}`}>{book.title}</Link></div>

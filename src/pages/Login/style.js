@@ -46,10 +46,6 @@ export default styled.section`
     border: none;
     color: white;
 
-    &.submit{
-      margin-top: 40px;
-    }
-
     &:active{
       background-color: #111;
       outline: none;
@@ -58,16 +54,6 @@ export default styled.section`
 
   .react-tags{
     position: relative;
-    display: flex;
-    flex-direction: column;
-
-    &__selected{
-      order: 1;
-
-      button{
-        margin: 4px;
-      }
-    }
 
     &__suggestions{
       position: absolute;

@@ -1,7 +1,8 @@
 import axios from 'axios';
+import env from '../env';
 
 const api = axios.create({
-  baseURL: 'http://paperball.com.br:3333/api',
+  baseURL: `${env.baseUrl}/api`,
 });
 
 export default api;

@@ -13,6 +13,9 @@ class CreateBook extends Component {
     description: '',
     edition: '',
     price: '',
+    pages: 0,
+    publishing_date: '',
+    format: '',
     illustrators: [],
     writers: [],
     licensors: [],
@@ -50,6 +53,9 @@ class CreateBook extends Component {
       description,
       edition,
       price,
+      pages,
+      publishing_date,
+      format,
       selectedIllustrators,
       selectedWriters,
       selectedLicensors,
@@ -59,9 +65,12 @@ class CreateBook extends Component {
     const payload = {
       isbn,
       title,
-      description,
       edition,
+      description,
       price,
+      pages,
+      publishing_date,
+      format,
       illustrators: selectedIllustrators.map(i => i.id),
       writers: selectedWriters.map(i => i.id),
       licensors: selectedLicensors.map(i => i.id),
@@ -112,8 +121,8 @@ class CreateBook extends Component {
 
   render() {
     const {
-      isbn, title, description, edition, preview,
-      price,
+      isbn, title, description, edition, preview, price,
+      pages, publishing_date, format,
       illustrators, writers, licensors, publishers,
       selectedIllustrators, selectedWriters, selectedLicensors, selectedPublishers,
     } = this.state;
@@ -151,6 +160,22 @@ class CreateBook extends Component {
 
           <input
             type="text"
+            name="edition"
+            placeholder="Edição"
+            onChange={this.handleChange}
+            value={edition}
+          />
+
+          <input
+            type="number"
+            name="pages"
+            placeholder="Páginas"
+            onChange={this.handleChange}
+            value={pages}
+          />
+
+          <input
+            type="text"
             name="description"
             placeholder="Descrição"
             onChange={this.handleChange}
@@ -158,12 +183,19 @@ class CreateBook extends Component {
           />
 
           <input
-            type="text"
-            name="edition"
-            placeholder="Edição"
+            type="date"
+            name="publishing_date"
+            placeholder="Data de publicação"
             onChange={this.handleChange}
-            value={edition}
-            className="btn"
+            value={publishing_date}
+          />
+
+          <input
+            type="text"
+            name="format"
+            placeholder="Formato"
+            onChange={this.handleChange}
+            value={format}
           />
 
           <input
@@ -219,7 +251,7 @@ class CreateBook extends Component {
             placeholder="Adicionar editora"
           />
 
-          <button type="submit">Enviar</button>
+          <button type="submit" className="submit">Enviar</button>
         </form>
       </CreateBookContainer>
     );

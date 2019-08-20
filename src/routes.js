@@ -1,6 +1,8 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import Login from './pages/Login';
+import Users from './pages/Users';
 import Books from './pages/Books';
 import Book from './pages/Book';
 import CreateBook from './pages/CreateBook';
@@ -12,6 +14,10 @@ import Writers from './pages/Writers';
 function Routes() {
   return (
     <Switch>
+      <Route exact path="/login" component={Login} />
+
+      <Route exact path="/users" component={Users} />
+
       <Route exact path="/books" component={Books} />
       <Route path="/books/create" component={CreateBook} />
       <Route path="/books/:id" component={Book} />
