@@ -21,9 +21,9 @@ class Books extends Component {
     return (
       <BooksList>
         <header>
-          <h1>Livros</h1>
+          <h1>Quadrinhos</h1>
           <div>
-            <Link to="/books/create">Adicionar livro</Link>
+            <Link to="/books/create">Adicionar quadrinho</Link>
           </div>
         </header>
         { books.map(book => (

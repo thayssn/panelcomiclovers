@@ -9,7 +9,7 @@ export default function Header() {
         <Link to="/login"><h1>Comic Lovers</h1></Link>
         <div className="header__nav">
           <Link to="/users">Usuários</Link>
-          <Link to="/books">Livros</Link>
+          <Link to="/books">Quadrinhos</Link>
           <Link to="/illustrators">Ilustradores</Link>
           <Link to="/licensors">Licenciantes</Link>
           <Link to="/writers">Autores</Link>

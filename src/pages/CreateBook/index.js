@@ -85,7 +85,7 @@ class CreateBook extends Component {
       await api.post('books', data);
       history.push('/books');
     } catch (err) {
-      alert('Houve um erro ao cadastrar o livro.');
+      alert('Houve um erro ao cadastrar o quadrinho.');
     }
   }
 
@@ -129,7 +129,7 @@ class CreateBook extends Component {
 
     return (
       <CreateBookContainer className="new_post">
-        <h1>Cadastrar novo livro</h1>
+        <h1>Cadastrar novo quadrinho</h1>
         <form className="form" onSubmit={this.handleSubmit}>
           <div>
             <div className="thumbnail">
