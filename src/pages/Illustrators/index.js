@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
-
 
 // using styled-components
 import IllustratorsList from './style';
@@ -19,7 +19,12 @@ class Illustrators extends Component {
     const { illustrators } = this.state;
     return (
       <IllustratorsList>
-        <h1>Ilustradores</h1>
+        <header>
+          <h1>Ilustradores</h1>
+          <div>
+            <Link to="/illustrators/create">Adicionar ilustrador</Link>
+          </div>
+        </header>
         { illustrators.map(illustrator => (
           <article className="illustrator" key={illustrator.id}>
             <div className="illustrator__info">

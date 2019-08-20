@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
 
 
@@ -19,7 +20,12 @@ class Writers extends Component {
     const { writers } = this.state;
     return (
       <WritersList>
-        <h1>Autores</h1>
+        <header>
+          <h1>Autores</h1>
+          <div>
+            <Link to="/writers/create">Adicionar autor</Link>
+          </div>
+        </header>
         { writers.map(writer => (
           <article className="writer" key={writer.id}>
             <div className="writer__info">

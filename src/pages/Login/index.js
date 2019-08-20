@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import api from '../../services/api';
-import CreateBookContainer from './style';
+import LoginContainer from './style';
 // import './New.scss';
 
 const cookies = new Cookies();
 
-class CreateBook extends Component {
+class Login extends Component {
   state = {
     email: '',
     password: '',
@@ -41,7 +41,7 @@ class CreateBook extends Component {
     } = this.state;
 
     return (
-      <CreateBookContainer className="new_post">
+      <LoginContainer className="new_post">
         <h1>Login</h1>
         <form className="form" onSubmit={this.handleSubmit}>
           <input
@@ -62,9 +62,9 @@ class CreateBook extends Component {
 
           <button type="submit">Entrar</button>
         </form>
-      </CreateBookContainer>
+      </LoginContainer>
     );
   }
 }
 
-export default CreateBook;
+export default Login;

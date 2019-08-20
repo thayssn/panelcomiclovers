@@ -12,6 +12,14 @@ const BooksList = styled.section`
   header{
     display: flex;
     justify-content: space-between;
+
+    a{
+      background-color: #333;
+      padding: 10px;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
   }
 
   .book{

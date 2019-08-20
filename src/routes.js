@@ -7,9 +7,13 @@ import Books from './pages/Books';
 import Book from './pages/Book';
 import CreateBook from './pages/CreateBook';
 import Illustrators from './pages/Illustrators';
+import CreateIllustrator from './pages/CreateIllustrator';
 import Licensors from './pages/Licensors';
+import CreateLicensor from './pages/CreateLicensor';
 import Publishers from './pages/Publishers';
+import CreatePublisher from './pages/CreatePublisher';
 import Writers from './pages/Writers';
+import CreateWriter from './pages/CreateWriter';
 
 function Routes() {
   return (
@@ -23,10 +27,13 @@ function Routes() {
       <Route path="/books/:id" component={Book} />
 
       <Route exact path="/writers" component={Writers} />
-
+      <Route path="/writers/create" component={CreateWriter} />
       <Route exact path="/licensors" component={Licensors} />
+      <Route path="/licensors/create" component={CreateLicensor} />
       <Route exact path="/publishers" component={Publishers} />
+      <Route path="/publishers/create" component={CreatePublisher} />
       <Route exact path="/illustrators" component={Illustrators} />
+      <Route path="/illustrators/create" component={CreateIllustrator} />
     </Switch>
   );
 }

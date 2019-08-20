@@ -9,6 +9,19 @@ const LicensorsList = styled.section`
     max-width: 960px;
   }
 
+  header{
+    display: flex;
+    justify-content: space-between;
+
+    a{
+      background-color: #333;
+      padding: 10px;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+  }
+
   .licensor{
     width: 100%;
     background-color: #FFF;

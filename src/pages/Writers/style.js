@@ -9,6 +9,19 @@ const WritersList = styled.section`
     max-width: 960px;
   }
 
+  header{
+    display: flex;
+    justify-content: space-between;
+
+    a{
+      background-color: #333;
+      padding: 10px;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+  }
+
   .writer{
     width: 100%;
     background-color: #FFF;
@@ -16,6 +29,7 @@ const WritersList = styled.section`
     margin-top: 30px;
     border-radius: 3px;
     display: flex;
+
 
     &__thumbnail{
       width: 110px;
