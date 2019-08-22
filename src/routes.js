@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Login from './pages/Login';
 import Users from './pages/Users';
+import CreateUser from './pages/CreateUser';
 import Books from './pages/Books';
 import Book from './pages/Book';
 import CreateBook from './pages/CreateBook';
@@ -21,6 +22,8 @@ function Routes() {
       <Route exact path="/login" component={Login} />
 
       <Route exact path="/users" component={Users} />
+      <Route path="/users/create" component={CreateUser} />
+      {/* <Route path="/users/:id" component={User} /> */}
 
       <Route exact path="/books" component={Books} />
       <Route path="/books/create" component={CreateBook} />

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
 
 // using styled-components
 import UsersList from './style';
 
 const cookies = new Cookies();
-
 class Users extends Component {
   state = {
     users: [],
@@ -28,7 +28,12 @@ class Users extends Component {
     const { users } = this.state;
     return (
       <UsersList>
-        <h1>Usuários</h1>
+        <header>
+          <h1>Usuários</h1>
+          <div>
+            <Link to="/users/create">Adicionar usuário</Link>
+          </div>
+        </header>
         { users.map(user => (
           <article className="user" key={user.id}>
             <div className="user__info">
