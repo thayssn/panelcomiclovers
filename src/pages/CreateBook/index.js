@@ -69,7 +69,7 @@ class CreateBook extends Component {
       description,
       price,
       pages,
-      publishing_date,
+      publishing_date: publishing_date || null,
       format,
       illustrators: selectedIllustrators.map(i => i.id),
       writers: selectedWriters.map(i => i.id),
@@ -85,6 +85,7 @@ class CreateBook extends Component {
       await api.post('books', data);
       history.push('/books');
     } catch (err) {
+      console.log(err);
       alert('Houve um erro ao cadastrar o quadrinho.');
     }
   }
