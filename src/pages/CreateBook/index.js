@@ -149,6 +149,7 @@ class CreateBook extends Component {
             placeholder="ISBN"
             onChange={this.handleChange}
             value={isbn}
+            required
           />
 
           <input
@@ -157,6 +158,7 @@ class CreateBook extends Component {
             placeholder="Título"
             onChange={this.handleChange}
             value={title}
+            required
           />
 
           <input
