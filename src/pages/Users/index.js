@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
+import env from '../../env';
 
 // using styled-components
 import UsersList from './style';
@@ -59,14 +60,20 @@ class Users extends Component {
           <Link to="/login">Login</Link>
         </div>
         )}
-        { users.map(user => (
-          <article className="user" key={user.id}>
-            <div className="user__info">
-              <div className="user__title">{user.name}</div>
-              <div className="user__description">{user.email}</div>
-            </div>
-          </article>
-        ))}
+        { users.map((user) => {
+          console.log(user);
+          return (
+            <article className="user" key={user.id}>
+              <div className="user__thumbnail">
+                { user.profile_picture && <img src={`${env.baseUrl}/${user.profile_picture}`} alt="" />}
+              </div>
+              <div className="user__info">
+                <div className="user__title">{user.name}</div>
+                <div className="user__description">{user.email}</div>
+              </div>
+            </article>
+          );
+        })}
       </UsersList>
     );
   }

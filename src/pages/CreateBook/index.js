@@ -85,7 +85,6 @@ class CreateBook extends Component {
       await api.post('books', data);
       history.push('/books');
     } catch (err) {
-      console.log(err);
       alert('Houve um erro ao cadastrar o quadrinho.');
     }
   }

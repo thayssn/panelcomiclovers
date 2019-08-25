@@ -32,7 +32,7 @@ const UsersList = styled.section`
 
     &__thumbnail{
       width: 110px;
-      height: 150px;
+      height: 110px;
       background-color: #DDD;
       flex-shrink: 0;
 
@@ -45,6 +45,7 @@ const UsersList = styled.section`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        flex-shrink: 0;
       }
     }
 
