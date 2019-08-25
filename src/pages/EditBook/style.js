@@ -9,6 +9,11 @@ export default styled.section`
 
   form{
     width: 100%;
+    margin: 15px 0;
+
+    p{
+      margin-top: 15px;
+    }
   }
 
   .thumbnail{

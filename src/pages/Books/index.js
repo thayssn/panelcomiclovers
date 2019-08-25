@@ -32,7 +32,12 @@ class Books extends Component {
               { book.thumbnail && <img src={`${env.baseUrl}/${book.thumbnail}`} alt="" className="book__thumbnail" />}
             </div>
             <div className="book__info">
-              <div className="book__title"><Link to={`/books/${book.id}`}>{book.title}</Link></div>
+              <div className="book__title">
+                <Link to={`/books/${book.id}`}>
+                  {book.title}
+                  {book.edition && ` - ${book.edition}`}
+                </Link>
+              </div>
               <div className="book__edition">{`Edição: ${book.edition}`}</div>
               <div className="book__isbn">{`ISBN: ${book.isbn}`}</div>
               <div className="book__licensor">{book.licensors && book.licensors.map(licensor => licensor.name)}</div>

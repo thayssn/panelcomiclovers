@@ -162,11 +162,14 @@ class EditBook extends Component {
       pages, publishing_date, format,
       illustrators, writers, licensors, publishers,
       selectedIllustrators, selectedWriters, selectedLicensors, selectedPublishers,
+      originalBook,
     } = this.state;
 
     return (
       <EditBookContainer className="new_post">
-        <h1>Cadastrar novo quadrinho</h1>
+        <h1>
+          {`Editando - ${originalBook.title}`}
+        </h1>
         <form className="form" onSubmit={this.handleSubmit}>
           <div>
             <div className="thumbnail">
@@ -178,7 +181,7 @@ class EditBook extends Component {
               onChange={this.handleFileChange}
             />
           </div>
-
+          <p>ISBN (obrigatório)</p>
           <input
             type="text"
             name="isbn"
@@ -188,6 +191,7 @@ class EditBook extends Component {
             required
           />
 
+          <p>Título (obrigatório)</p>
           <input
             type="text"
             name="title"
@@ -197,6 +201,7 @@ class EditBook extends Component {
             required
           />
 
+          <p>Edição</p>
           <input
             type="text"
             name="edition"
@@ -205,6 +210,7 @@ class EditBook extends Component {
             value={edition}
           />
 
+          <p>Número de Páginas</p>
           <input
             type="number"
             name="pages"
@@ -213,6 +219,7 @@ class EditBook extends Component {
             value={pages}
           />
 
+          <p>Descrição</p>
           <input
             type="text"
             name="description"
@@ -221,6 +228,7 @@ class EditBook extends Component {
             value={description}
           />
 
+          <p>Data de publicação</p>
           <input
             type="date"
             name="publishing_date"
@@ -229,6 +237,7 @@ class EditBook extends Component {
             value={publishing_date}
           />
 
+          <p>Formato</p>
           <input
             type="text"
             name="format"
@@ -237,6 +246,7 @@ class EditBook extends Component {
             value={format}
           />
 
+          <p>Preço</p>
           <input
             type="text"
             name="price"
@@ -246,6 +256,7 @@ class EditBook extends Component {
           />
 
 
+          <p>Ilustradores</p>
           <ReactTags
             maxSuggestionsLength={50}
             tags={selectedIllustrators}
@@ -255,8 +266,10 @@ class EditBook extends Component {
             autoresize={false}
             minQueryLength={0}
             placeholder="Adicionar ilustrador"
+            autofocus={false}
           />
 
+          <p>Escritores</p>
           <ReactTags
             maxSuggestionsLength={50}
             tags={selectedWriters}
@@ -266,8 +279,10 @@ class EditBook extends Component {
             autoresize={false}
             minQueryLength={0}
             placeholder="Adicionar escritor"
+            autofocus={false}
           />
 
+          <p>Licenciantes</p>
           <ReactTags
             maxSuggestionsLength={50}
             tags={selectedLicensors}
@@ -277,8 +292,10 @@ class EditBook extends Component {
             autoresize={false}
             minQueryLength={0}
             placeholder="Adicionar licenciante"
+            autofocus={false}
           />
 
+          <p>Editoras</p>
           <ReactTags
             maxSuggestionsLength={50}
             tags={selectedPublishers}
@@ -288,6 +305,7 @@ class EditBook extends Component {
             autoresize={false}
             minQueryLength={0}
             placeholder="Adicionar editora"
+            autofocus={false}
           />
 
           <button type="submit" className="submit">Enviar</button>

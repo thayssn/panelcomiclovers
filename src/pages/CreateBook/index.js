@@ -141,7 +141,7 @@ class CreateBook extends Component {
               onChange={this.handleFileChange}
             />
           </div>
-
+          <p>ISBN (obrigatório)</p>
           <input
             type="text"
             name="isbn"
@@ -151,6 +151,7 @@ class CreateBook extends Component {
             required
           />
 
+          <p>Título (obrigatório)</p>
           <input
             type="text"
             name="title"
@@ -160,6 +161,7 @@ class CreateBook extends Component {
             required
           />
 
+          <p>Edição</p>
           <input
             type="text"
             name="edition"
@@ -168,6 +170,7 @@ class CreateBook extends Component {
             value={edition}
           />
 
+          <p>Número de Páginas</p>
           <input
             type="number"
             name="pages"
@@ -176,6 +179,7 @@ class CreateBook extends Component {
             value={pages}
           />
 
+          <p>Descrição</p>
           <input
             type="text"
             name="description"
@@ -184,6 +188,7 @@ class CreateBook extends Component {
             value={description}
           />
 
+          <p>Data de publicação</p>
           <input
             type="date"
             name="publishing_date"
@@ -192,6 +197,7 @@ class CreateBook extends Component {
             value={publishing_date}
           />
 
+          <p>Formato</p>
           <input
             type="text"
             name="format"
@@ -200,6 +206,7 @@ class CreateBook extends Component {
             value={format}
           />
 
+          <p>Preço</p>
           <input
             type="text"
             name="price"
@@ -208,7 +215,7 @@ class CreateBook extends Component {
             value={price}
           />
 
-
+          <p>Ilustradores</p>
           <ReactTags
             maxSuggestionsLength={50}
             tags={selectedIllustrators}
@@ -218,8 +225,10 @@ class CreateBook extends Component {
             autoresize={false}
             minQueryLength={0}
             placeholder="Adicionar ilustrador"
+            autofocus={false}
           />
 
+          <p>Escritores</p>
           <ReactTags
             maxSuggestionsLength={50}
             tags={selectedWriters}
@@ -229,8 +238,10 @@ class CreateBook extends Component {
             autoresize={false}
             minQueryLength={0}
             placeholder="Adicionar escritor"
+            autofocus={false}
           />
 
+          <p>Licenciantes</p>
           <ReactTags
             maxSuggestionsLength={50}
             tags={selectedLicensors}
@@ -240,8 +251,10 @@ class CreateBook extends Component {
             autoresize={false}
             minQueryLength={0}
             placeholder="Adicionar licenciante"
+            autofocus={false}
           />
 
+          <p>Editoras</p>
           <ReactTags
             maxSuggestionsLength={50}
             tags={selectedPublishers}
@@ -251,6 +264,7 @@ class CreateBook extends Component {
             autoresize={false}
             minQueryLength={0}
             placeholder="Adicionar editora"
+            autofocus={false}
           />
 
           <button type="submit" className="submit">Enviar</button>
