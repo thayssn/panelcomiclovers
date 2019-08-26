@@ -248,11 +248,12 @@ class EditBook extends Component {
 
           <p>Preço</p>
           <input
-            type="text"
+            type="number"
             name="price"
             placeholder="Preço. Ex: 13.23"
             onChange={this.handleChange}
             value={price}
+            step="0.1"
           />
 
 
