@@ -26,10 +26,8 @@ class Users extends Component {
         });
       this.setState({ users });
     } catch (err) {
-      console.log(err.message);
       const [context, code] = err.message.toLowerCase().split('status code');
       const isRequest = context.startsWith('request');
-      console.log(context, isRequest, code);
       if (isRequest) {
         switch (code.trim()) {
           case '401':
@@ -60,20 +58,17 @@ class Users extends Component {
           <Link to="/login">Login</Link>
         </div>
         )}
-        { users.map((user) => {
-          console.log(user);
-          return (
-            <article className="user" key={user.id}>
-              <div className="user__thumbnail">
-                { user.profile_picture && <img src={`${env.baseUrl}/${user.profile_picture}`} alt="" />}
-              </div>
-              <div className="user__info">
-                <div className="user__title">{user.name}</div>
-                <div className="user__description">{user.email}</div>
-              </div>
-            </article>
-          );
-        })}
+        { users.map(user => (
+          <article className="user" key={user.id}>
+            <div className="user__thumbnail">
+              { user.profile_picture && <img src={`${env.baseUrl}/${user.profile_picture}`} alt="" />}
+            </div>
+            <div className="user__info">
+              <div className="user__title">{user.name}</div>
+              <div className="user__description">{user.email}</div>
+            </div>
+          </article>
+        ))}
       </UsersList>
     );
   }
