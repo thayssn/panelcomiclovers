@@ -72,15 +72,15 @@ class Books extends Component {
 
   handleCheck = (id) => {
     const { books, originalBooks } = this.state;
-    const updatedBooks = books.map(book => ({
+    const toggleSelectedBook = book => ({
       ...book,
       selected: (book.id === id) ? !book.selected : book.selected,
-    }));
-    const updatedOriginalBooks = originalBooks.map(book => ({
-      ...book,
-      selected: (book.id === id) ? !book.selected : book.selected,
-    }));
-    this.setState({ books: updatedBooks, originalBooks: updatedOriginalBooks });
+    });
+
+    this.setState({
+      books: books.map(toggleSelectedBook),
+      originalBooks: originalBooks.map(toggleSelectedBook),
+    });
   }
 
   handleSearch = (e) => {

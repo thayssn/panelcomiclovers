@@ -17,6 +17,7 @@ import CreatePublisher from './pages/CreatePublisher';
 import Writers from './pages/Writers';
 import CreateWriter from './pages/CreateWriter';
 import Collections from './pages/Collections';
+import Collection from './pages/Collection';
 import CreateCollection from './pages/CreateCollections';
 
 function Routes() {
@@ -43,7 +44,7 @@ function Routes() {
       <Route exact path="/illustrators/create" component={CreateIllustrator} />
 
       <Route exact path="/collections/create" component={CreateCollection} />
-      <Route exact path="/collections/:id" component={Book} />
+      <Route exact path="/collections/:id" component={Collection} />
       <Route exact path="/collections/:id/edit" component={EditBook} />
       <Route exact path="/collections" component={Collections} />
     </Switch>

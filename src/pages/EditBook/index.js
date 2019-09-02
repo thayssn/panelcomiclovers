@@ -39,6 +39,7 @@ class EditBook extends Component {
       selectedWriters: book.writers,
       selectedLicensors: book.licensors,
       selectedPublishers: book.publishers,
+      publishing_date: book.publishing_date.slice(0, 10),
       preview: `${env.baseUrl}/${book.thumbnail}`,
     });
   }

@@ -11,7 +11,7 @@ const cookies = new Cookies();
 class Collections extends Component {
   state = {
     collections: [],
-    error: '',
+    error: null,
   }
 
   async componentDidMount() {
@@ -26,7 +26,7 @@ class Collections extends Component {
         });
       this.setState({ collections });
     } catch (err) {
-      // this.setState({ error: JSON.stringify(err) });
+      this.setState({ error: { code: 401 } });
       console.log(err);
     }
   }
@@ -41,17 +41,24 @@ class Collections extends Component {
             <Link to="/collections/create">Adicionar coleção pública</Link>
           </div>
         </header>
-        { error && (
-        <Redirect to="/login" />
+        { error && error.code === 401 && (
+          <Redirect to="/login" />
         )}
         { collections.map(collection => (
-          <article className="collection" key={collection.title}>
+          <article className="collection" key={collection.id}>
             <div className="collection__thumbnail">
               { collection.thumbnail && <img src={`${env.baseUrl}/${collection.thumbnail}`} alt="" />}
             </div>
             <div className="collection__info">
-              <div className="collection__title">{collection.title}</div>
+              <div className="collection__title">
+                {' '}
+                <Link className="button" to={`/collections/${collection.id}`}>{collection.title}</Link>
+              </div>
               <div className="collection__description">{collection.description}</div>
+            </div>
+            <div className="collection__action">
+              <Link className="button" to={`/collections/${collection.id}/edit`}>Editar</Link>
+              <Link className="button" to={`/books/?collection=${collection.id}`}>Selecionar Quadrinhos</Link>
             </div>
           </article>
         ))}
