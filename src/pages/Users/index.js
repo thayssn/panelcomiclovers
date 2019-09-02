@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import api from '../../services/api';
 import env from '../../env';
 
@@ -26,19 +26,7 @@ class Users extends Component {
         });
       this.setState({ users });
     } catch (err) {
-      const [context, code] = err.message.toLowerCase().split('status code');
-      const isRequest = context.startsWith('request');
-      if (isRequest) {
-        switch (code.trim()) {
-          case '401':
-            console.log('Não autorizado.');
-            break;
-          default:
-            console.log('Bad request.');
-        }
-      }
-
-      this.setState({ error: 'Por favor faça login para visualizar a lista' });
+      this.setState({ error: JSON.stringify(err) });
     }
   }
 
@@ -53,10 +41,7 @@ class Users extends Component {
           </div>
         </header>
         { error && (
-        <div className="error">
-          <p>{error}</p>
-          <Link to="/login">Login</Link>
-        </div>
+        <Redirect to="/login" />
         )}
         { users.map(user => (
           <article className="user" key={user.id}>

@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
+import Cookies from 'universal-cookie';
 import api from '../../services/api';
-import CreateUserContainer from './style';
+import CreateCollectionContainer from './style';
 
-class CreateUser extends Component {
+const cookies = new Cookies();
+
+class CreateCollection extends Component {
   state = {
     preview: null,
     image: null,
-    name: '',
-    email: '',
-    password: '',
+    title: '',
+    description: '',
   };
 
   handleSubmit = async (e) => {
+    const userToken = cookies.get('userToken');
     e.preventDefault();
 
     const { history } = this.props;
@@ -19,21 +22,24 @@ class CreateUser extends Component {
 
     const {
       image,
-      name,
-      email,
-      password,
+      title,
+      description,
     } = this.state;
 
-    data.append('name', name);
-    data.append('email', email);
-    data.append('password', password);
+    data.append('title', title);
+    data.append('description', description);
     data.append('image', image);
+    data.append('type', 'public');
 
     try {
-      await api.post('users', data);
-      history.push('/users');
+      await api.post('collections', data, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      history.push('/collections');
     } catch (err) {
-      alert('Houve um erro ao cadastrar o usuário.');
+      alert('Houve um erro ao cadastrar a coleção.');
     }
   }
 
@@ -47,12 +53,12 @@ class CreateUser extends Component {
 
   render() {
     const {
-      name, preview, email, password,
+      title, preview, description,
     } = this.state;
 
     return (
-      <CreateUserContainer className="new_post">
-        <h1>Cadastrar novo usuário</h1>
+      <CreateCollectionContainer className="new_post">
+        <h1>Cadastrar nova coleção</h1>
         <form className="form" onSubmit={this.handleSubmit}>
           <div>
             <div className="thumbnail">
@@ -67,33 +73,25 @@ class CreateUser extends Component {
 
           <input
             type="text"
-            name="name"
+            name="title"
             placeholder="Nome"
             onChange={this.handleChange}
-            value={name}
+            value={title}
           />
 
           <input
-            type="email"
-            name="email"
-            placeholder="Email"
+            type="text"
+            name="description"
+            placeholder="description"
             onChange={this.handleChange}
-            value={email}
-          />
-
-          <input
-            type="password"
-            name="password"
-            placeholder="Senha"
-            onChange={this.handleChange}
-            value={password}
+            value={description}
           />
 
           <button type="submit" className="submit">Enviar</button>
         </form>
-      </CreateUserContainer>
+      </CreateCollectionContainer>
     );
   }
 }
 
-export default CreateUser;
+export default CreateCollection;

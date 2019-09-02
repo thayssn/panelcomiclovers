@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const BooksList = styled.section`
+const CollectionsList = styled.section`
   width: 100%;
   margin: 0 auto;
   padding: 30px 20px;
@@ -13,42 +13,16 @@ const BooksList = styled.section`
     display: flex;
     justify-content: space-between;
 
-    p{
-      margin-top: 20px;
-      font-size: 14px;
-      font-weight: 300;
-    }
-
-    .button{
+    a{
       background-color: #333;
       padding: 10px;
       color: white;
       border-radius: 5px;
       text-decoration: none;
-      margin: 0 5px;
-      font-size: 14px;
-      cursor: pointer;
     }
   }
 
-  .search_box{
-    width: 100%;
-    padding: 15px 10px;
-    margin: 10px 0;
-    background: white;
-    border: 1px solid #ddd;
-
-    p{
-      margin-bottom: 10px;
-    }
-
-    input{
-      font-size: 14px;
-      width: 100%;
-    }
-  }
-
-  .book{
+  .collection{
     width: 100%;
     background-color: #FFF;
     border: 1px solid #DDD;
@@ -58,7 +32,7 @@ const BooksList = styled.section`
 
     &__thumbnail{
       width: 110px;
-      height: 150px;
+      height: 110px;
       background-color: #DDD;
       flex-shrink: 0;
 
@@ -71,21 +45,16 @@ const BooksList = styled.section`
         width: 100%;
         height: 100%;
         object-fit: cover;
+        flex-shrink: 0;
       }
     }
 
     &__info{
       padding: 10px;
-      flex: 1;
 
       @media (max-width: 540px){
         padding: 5px;
       }
-    }
-
-    &__action{
-      padding: 30px;
-      flex-shrink: 0;
     }
 
     &__title{
@@ -102,4 +71,4 @@ const BooksList = styled.section`
 `;
 
 
-export default BooksList;
+export default CollectionsList;

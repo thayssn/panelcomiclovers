@@ -1,32 +1,131 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import queryString from 'query-string';
+import Cookies from 'universal-cookie';
 import api from '../../services/api';
 import env from '../../env';
 
 // using styled-components
 import BooksList from './style';
 
+const cookies = new Cookies();
+
 class Books extends Component {
   state = {
+    originalBooks: [],
     books: [],
+    collection: null,
+    searchTerm: '',
   }
 
   async componentDidMount() {
-    const { data: books } = await api.get('books');
-    this.setState({ books });
+    try {
+      let { data: books } = await api.get('books');
+
+      const { location } = this.props;
+      const queries = queryString.parse(location.search);
+
+      if (queries.collection) {
+        const userToken = cookies.get('userToken');
+        const collectionId = parseInt(queries.collection, 0);
+        try {
+          const { data: collection } = await api.get(`collections/${collectionId}`, {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          });
+
+          this.setState({ collection });
+
+          books = books.map((book) => {
+            const selected = collection.books.find(collectionBook => collectionBook.id === book.id);
+            return { ...book, selected: selected || false };
+          });
+        } catch (err) {
+          return;
+        }
+      }
+
+      this.setState({ books, originalBooks: books });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  addToCollection = async () => {
+    const { books, collection } = this.state;
+    const selectedBooks = books.filter(book => book.selected).map(book => book.id);
+    try {
+      const userToken = cookies.get('userToken');
+      await api.post(`collections/${collection.id}/books`, {
+        books: selectedBooks,
+      }, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      alert('Coleção atualizada!');
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  handleCheck = (id) => {
+    const { books, originalBooks } = this.state;
+    const updatedBooks = books.map(book => ({
+      ...book,
+      selected: (book.id === id) ? !book.selected : book.selected,
+    }));
+    const updatedOriginalBooks = originalBooks.map(book => ({
+      ...book,
+      selected: (book.id === id) ? !book.selected : book.selected,
+    }));
+    this.setState({ books: updatedBooks, originalBooks: updatedOriginalBooks });
+  }
+
+  handleSearch = (e) => {
+    const { originalBooks } = this.state;
+    let searchTerm = e.target.value;
+    if (searchTerm) {
+      searchTerm = searchTerm.toLowerCase();
+      this.setState({
+        books: originalBooks.filter(book => book.title.toLowerCase().includes(searchTerm)),
+      });
+    } else {
+      this.setState({ books: originalBooks });
+    }
+    this.setState({ searchTerm });
   }
 
   render() {
-    const { books } = this.state;
+    const { books, collection, searchTerm } = this.state;
+    const selectedBooks = books.filter(book => book.selected);
     return (
       <BooksList>
         <header>
-          <h1>Quadrinhos</h1>
+          { collection
+            ? (
+              <div>
+                <h1>{`${collection.title}`}</h1>
+                <p>Adicionar quadrinhos</p>
+              </div>
+            )
+            : <h1>Quadrinhos</h1>
+          }
           <div>
-            <Link to="/books/create">Adicionar quadrinho</Link>
+            {collection ? (
+              <button type="button" className="button" onClick={this.addToCollection}>
+                {`Atualizar coleção (${selectedBooks.length})`}
+              </button>
+            )
+              : <Link to="/books/create" className="button">Criar quadrinho</Link>}
           </div>
         </header>
-        { books.map(book => (
+        <div className="search_box">
+          <p>Procurar:</p>
+          <input type="text" value={searchTerm} onChange={this.handleSearch} />
+        </div>
+        { books.length ? books.map(book => (
           <article className="book" key={book.id}>
             <div className="book__thumbnail">
               { book.thumbnail && <img src={`${env.baseUrl}/${book.thumbnail}`} alt="" className="book__thumbnail" />}
@@ -42,8 +141,16 @@ class Books extends Component {
               <div className="book__isbn">{`ISBN: ${book.isbn}`}</div>
               <div className="book__licensor">{book.licensors && book.licensors.map(licensor => licensor.name)}</div>
             </div>
+            {collection
+            && (
+            <div className="book__action">
+              <input type="checkbox" checked={book.selected} onChange={() => { this.handleCheck(book.id); }} />
+            </div>
+            )
+            }
           </article>
-        ))}
+        ))
+          : <p>Nenhum livro encontrado</p>}
       </BooksList>
     );
   }

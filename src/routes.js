@@ -16,6 +16,8 @@ import Publishers from './pages/Publishers';
 import CreatePublisher from './pages/CreatePublisher';
 import Writers from './pages/Writers';
 import CreateWriter from './pages/CreateWriter';
+import Collections from './pages/Collections';
+import CreateCollection from './pages/CreateCollections';
 
 function Routes() {
   return (
@@ -39,6 +41,11 @@ function Routes() {
       <Route exact path="/publishers/create" component={CreatePublisher} />
       <Route exact path="/illustrators" component={Illustrators} />
       <Route exact path="/illustrators/create" component={CreateIllustrator} />
+
+      <Route exact path="/collections/create" component={CreateCollection} />
+      <Route exact path="/collections/:id" component={Book} />
+      <Route exact path="/collections/:id/edit" component={EditBook} />
+      <Route exact path="/collections" component={Collections} />
     </Switch>
   );
 }
