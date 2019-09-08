@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'universal-cookie';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import LoginContainer from './style';
 // import './New.scss';
@@ -44,23 +45,34 @@ class Login extends Component {
       <LoginContainer className="new_post">
         <h1>Login</h1>
         <form className="form" onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            name="email"
-            placeholder="E-mail"
-            onChange={this.handleChange}
-            value={email}
-          />
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Senha"
-            onChange={this.handleChange}
-            value={password}
-          />
+          <div className="inputGroup">
+            <input
+              type="text"
+              name="email"
+              placeholder="E-mail"
+              onChange={this.handleChange}
+              value={email}
+            />
 
-          <button type="submit">Entrar</button>
+          </div>
+          <div className="inputGroup">
+            <input
+              type="password"
+              name="password"
+              placeholder="Senha"
+              onChange={this.handleChange}
+              value={password}
+            />
+          </div>
+
+          <div className="inputGroup">
+            <button type="submit">Entrar</button>
+          </div>
+
+          <div className="inputGroup">
+            <Link to="/forgot_password">Esqueci minha senha</Link>
+          </div>
         </form>
       </LoginContainer>
     );

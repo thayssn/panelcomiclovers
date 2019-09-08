@@ -9,6 +9,7 @@ export default styled.section`
 
   form{
     width: 100%;
+    padding: 20px 0;
   }
 
   .thumbnail{
@@ -18,6 +19,7 @@ export default styled.section`
   .inputGroup{
     display: flex;
     align-items: center;
+    padding: 10px 0;
 
     button{
       flex-shrink: 0;
@@ -31,7 +33,6 @@ export default styled.section`
 
   input {
     width: 100%;
-    margin: 10px 0;
     padding: 5px;
     border-radius: 3px;
     font-size: 14px;
