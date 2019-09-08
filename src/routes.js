@@ -19,11 +19,15 @@ import CreateWriter from './pages/CreateWriter';
 import Collections from './pages/Collections';
 import Collection from './pages/Collection';
 import CreateCollection from './pages/CreateCollections';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 function Routes() {
   return (
     <Switch>
       <Route exact path="/login" component={Login} />
+      <Route exact path="/forgot_password" component={ForgotPassword} />
+      <Route exact path="/reset_password" component={ResetPassword} />
 
       <Route exact path="/users" component={Users} />
       <Route exact path="/users/create" component={CreateUser} />
