@@ -22,7 +22,7 @@ class Illustrators extends Component {
         <header>
           <h1>Ilustradores</h1>
           <div>
-            <Link to="/illustrators/create">Adicionar ilustrador</Link>
+            <Link to="/illustrators/create" className="button">Adicionar ilustrador</Link>
           </div>
         </header>
         { illustrators.map(illustrator => (

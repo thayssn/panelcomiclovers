@@ -22,7 +22,7 @@ class Licensors extends Component {
         <header>
           <h1>Licenciantes</h1>
           <div>
-            <Link to="/licensors/create">Adicionar licenciante</Link>
+            <Link to="/licensors/create" className="button">Adicionar licenciante</Link>
           </div>
         </header>
         { licensors.map(licensor => (

@@ -89,7 +89,7 @@ class CreateUser extends Component {
             value={password}
           />
 
-          <button type="submit" className="submit">Enviar</button>
+          <button type="submit" className="submit button">Cadastrar</button>
         </form>
       </CreateUserContainer>
     );

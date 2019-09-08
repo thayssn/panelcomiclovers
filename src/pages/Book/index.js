@@ -27,7 +27,7 @@ class Book extends Component {
             {book.title}
             {book.edition && ` - ${book.edition}`}
           </h1>
-          <Link to={`/books/${book.id}/edit`}>Editar</Link>
+          <Link to={`/books/${book.id}/edit`} className="button">Editar</Link>
         </header>
         <article className="book" key={book.id}>
           <div className="book__thumbnail">

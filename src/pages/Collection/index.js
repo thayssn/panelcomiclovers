@@ -31,11 +31,43 @@ class Collection extends Component {
           Authorization: `Bearer ${userToken}`,
         },
       });
-      console.log(collection);
       this.setState({ collection });
     } catch (err) {
       console.log(err);
+      this.setState({ error: { code: 400 } });
+    }
+  }
+
+  removeBook = async (bookId) => {
+    const userToken = cookies.get('userToken');
+    if (!userToken) {
       this.setState({ error: { code: 401 } });
+    }
+
+    console.log(userToken);
+
+    try {
+      const { collection } = this.state;
+
+      const { match } = this.props;
+      const { id } = match.params;
+
+      await api.delete(`collections/${id}/books/${bookId}`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      console.log(collection, bookId, id);
+
+      this.setState({
+        collection: {
+          ...collection,
+          books: collection.books.filter(book => book.id !== bookId),
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      this.setState({ error: { code: 400 } });
     }
   }
 
@@ -45,7 +77,7 @@ class Collection extends Component {
       <CollectionContainer>
         <header className="collection__header">
           <p />
-          <Link to={`/collections/${collection.id}/edit`}>Editar</Link>
+          <Link to={`/collections/${collection.id}/edit`} className="button">Editar</Link>
         </header>
         { error && error.code === 401 && (
           <Redirect to="/login" />
@@ -89,12 +121,12 @@ class Collection extends Component {
                 <div className="book__licensor">{book.licensors && book.licensors.map(licensor => licensor.name)}</div>
               </div>
               {collection
-            && (
-            <div className="book__action">
-              <button type="button" className="button" onClick={() => { this.removeBook(book.id); }} />
-            </div>
-            )
-            }
+                && (
+                <div className="book__action">
+                  <button type="button" className="button" onClick={() => { this.removeBook(book.id); }}>Remover</button>
+                </div>
+                )
+              }
             </article>
           ))}
         </div>

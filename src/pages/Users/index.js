@@ -37,7 +37,7 @@ class Users extends Component {
         <header>
           <h1>Usuários</h1>
           <div>
-            <Link to="/users/create">Adicionar usuário</Link>
+            <Link to="/users/create" className="button">Adicionar usuário</Link>
           </div>
         </header>
         { error && (

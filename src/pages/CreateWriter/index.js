@@ -45,7 +45,7 @@ class CreateWriter extends Component {
             value={name}
           />
 
-          <button type="submit">Entrar</button>
+          <button type="submit" className="button">Cadastrar</button>
         </form>
       </CreateWriterContainer>
     );

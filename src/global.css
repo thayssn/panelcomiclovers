@@ -10,3 +10,14 @@ body {
     font: 14px Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased !important;
 }
+
+.button{
+  background: linear-gradient(to left, #41b69c, #00a5e3);
+  padding: 10px;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 0 5px;
+  font-size: 14px;
+  cursor: pointer;
+}

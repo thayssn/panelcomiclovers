@@ -67,7 +67,7 @@ class ForgotPassword extends Component {
                   foram enviadas para o e-mail informado.
                 </p>
               )
-              : <button type="submit">Enviar</button>
+              : <button type="submit" className="button">Enviar</button>
           }
         </form>
 

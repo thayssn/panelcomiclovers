@@ -54,6 +54,7 @@ class Books extends Component {
 
   addToCollection = async () => {
     const { books, collection } = this.state;
+    const { history } = this.props;
     const selectedBooks = books.filter(book => book.selected).map(book => book.id);
     try {
       const userToken = cookies.get('userToken');
@@ -64,7 +65,7 @@ class Books extends Component {
           Authorization: `Bearer ${userToken}`,
         },
       });
-      alert('Coleção atualizada!');
+      history.push(`/collections/${collection.id}`);
     } catch (err) {
       console.log(err);
     }

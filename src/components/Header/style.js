@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
 const Header = styled.header`
-  background: #FFF;
+  background: linear-gradient(to left, #41b69c, #00a5e3);
   height: 72px;
   border-bottom: 1px solid #DDD;
+  color: white;
 
   a{
     margin: 0 10px;
-    color: #333;
+    color: #fff;
     text-decoration: none;
 
     &:visited, &:active, &:focus{

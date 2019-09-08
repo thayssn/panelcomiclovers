@@ -268,7 +268,7 @@ class CreateBook extends Component {
             autofocus={false}
           />
 
-          <button type="submit" className="submit">Enviar</button>
+          <button type="submit" className="submit button">Enviar</button>
         </form>
       </CreateBookContainer>
     );

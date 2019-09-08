@@ -22,7 +22,7 @@ class Publishers extends Component {
         <header>
           <h1>Editoras</h1>
           <div>
-            <Link to="/publishers/create">Adicionar editora</Link>
+            <Link to="/publishers/create" className="button">Adicionar editora</Link>
           </div>
         </header>
         { publishers.map(publisher => (

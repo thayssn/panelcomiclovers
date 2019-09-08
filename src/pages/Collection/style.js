@@ -16,16 +16,6 @@ const CollectionContainer = styled.section`
       font-weight: 300;
     }
 
-    .button{
-      background-color: #333;
-      padding: 10px;
-      color: white;
-      border-radius: 5px;
-      text-decoration: none;
-      margin: 0 5px;
-      font-size: 14px;
-      cursor: pointer;
-    }
   }
 
   .collection{

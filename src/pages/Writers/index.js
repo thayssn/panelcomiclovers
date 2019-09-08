@@ -23,7 +23,7 @@ class Writers extends Component {
         <header>
           <h1>Autores</h1>
           <div>
-            <Link to="/writers/create">Adicionar autor</Link>
+            <Link to="/writers/create" className="button">Adicionar autor</Link>
           </div>
         </header>
         { writers.map(writer => (

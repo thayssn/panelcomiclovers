@@ -38,7 +38,7 @@ class Collections extends Component {
         <header>
           <h1>Usuários</h1>
           <div>
-            <Link to="/collections/create">Adicionar coleção pública</Link>
+            <Link to="/collections/create" className="button">Adicionar coleção pública</Link>
           </div>
         </header>
         { error && error.code === 401 && (

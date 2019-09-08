@@ -67,7 +67,7 @@ class Login extends Component {
           </div>
 
           <div className="inputGroup">
-            <button type="submit">Entrar</button>
+            <button type="submit" className="button">Entrar</button>
           </div>
 
           <div className="inputGroup">
