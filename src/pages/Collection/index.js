@@ -26,7 +26,7 @@ class Collection extends Component {
     const { id } = match.params;
 
     try {
-      const { data: collection } = await api.get(`collections/${id}`, {
+      const { data: collection } = await api.get(`public/collections/${id}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },

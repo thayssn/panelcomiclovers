@@ -18,6 +18,7 @@ import Writers from './pages/Writers';
 import CreateWriter from './pages/CreateWriter';
 import Collections from './pages/Collections';
 import Collection from './pages/Collection';
+import EditCollection from './pages/EditCollection';
 import CreateCollection from './pages/CreateCollections';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
@@ -49,7 +50,7 @@ function Routes() {
 
       <Route exact path="/collections/create" component={CreateCollection} />
       <Route exact path="/collections/:id" component={Collection} />
-      <Route exact path="/collections/:id/edit" component={EditBook} />
+      <Route exact path="/collections/:id/edit" component={EditCollection} />
       <Route exact path="/collections" component={Collections} />
     </Switch>
   );

@@ -51,14 +51,9 @@ class Collections extends Component {
             </div>
             <div className="collection__info">
               <div className="collection__title">
-                {' '}
-                <Link className="button" to={`/collections/${collection.id}`}>{collection.title}</Link>
+                <Link to={`/collections/${collection.id}`}>{collection.title}</Link>
               </div>
               <div className="collection__description">{collection.description}</div>
-            </div>
-            <div className="collection__action">
-              <Link className="button" to={`/collections/${collection.id}/edit`}>Editar</Link>
-              <Link className="button" to={`/books/?collection=${collection.id}`}>Selecionar Quadrinhos</Link>
             </div>
           </article>
         ))}
