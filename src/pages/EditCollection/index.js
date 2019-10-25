@@ -32,8 +32,6 @@ class EditCollection extends Component {
       },
     });
 
-
-    console.log({ ...collection });
     this.setState({
       originalCollection: collection,
       ...collection,
