@@ -71,7 +71,6 @@ class EditCollection extends Component {
       });
       history.push(`/collections/${id}`);
     } catch (err) {
-      console.log(err);
       alert('Houve um erro ao atualizar a coleção.');
     }
   }
@@ -87,6 +86,27 @@ class EditCollection extends Component {
   handleBlur = (e) => {
     e.target.value = '';
     this.setState({ [e.target.name]: '' });
+  }
+
+  handleDelete = async () => {
+    try {
+      const userToken = cookies.get('userToken');
+
+      const { history, match } = this.props;
+      const { id } = match.params;
+      const confirmDelete = window.confirm('Tem certeza que deseja deletar?');
+
+      if (confirmDelete) {
+        await api.delete(`/public/collections/${id}`, {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
+        history.push('/collections');
+      }
+    } catch (err) {
+      alert('Houve um erro ao deletar a coleção.');
+    }
   }
 
   render() {
@@ -133,7 +153,10 @@ class EditCollection extends Component {
             value={description}
           />
 
-          <button type="submit" className="submit">Enviar</button>
+          <button type="button" onClick={this.handleDelete} className="button danger">
+            Deletar Coleção
+          </button>
+          <button type="submit" className="button">Salvar</button>
         </form>
       </EditCollectionContainer>
     );

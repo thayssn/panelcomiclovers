@@ -36,7 +36,7 @@ class Collections extends Component {
     return (
       <CollectionsList>
         <header>
-          <h1>Usuários</h1>
+          <h1>Coleções Públicas</h1>
           <div>
             <Link to="/collections/create" className="button">Adicionar coleção pública</Link>
           </div>
