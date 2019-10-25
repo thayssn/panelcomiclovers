@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import Cookies from 'universal-cookie';
 import api from '../../services/api';
 import EditBookContainer from './style';
 import env from '../../env';
 // import './New.scss';
 const ReactTags = require('react-tag-autocomplete');
+
+const cookies = new Cookies();
 
 class EditBook extends Component {
   state = {
@@ -39,7 +42,7 @@ class EditBook extends Component {
       selectedWriters: book.writers,
       selectedLicensors: book.licensors,
       selectedPublishers: book.publishers,
-      publishing_date: book.publishing_date.slice(0, 10),
+      publishing_date: book.publishing_date ? book.publishing_date.slice(0, 10) : '',
       preview: `${env.baseUrl}/${book.thumbnail}`,
     });
   }
@@ -157,6 +160,27 @@ class EditBook extends Component {
     this.setState({ [key]: selectedValues });
   }
 
+  handleDeleteBook = async () => {
+    try {
+      const userToken = cookies.get('userToken');
+
+      const { history, match } = this.props;
+      const { id } = match.params;
+      const confirmDelete = window.confirm('Tem certeza que deseja deletar?');
+
+      if (confirmDelete) {
+        await api.delete(`/books/${id}`, {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
+        history.push('/books');
+      }
+    } catch (err) {
+      alert('Houve um erro ao deletar a coleção.');
+    }
+  }
+
   render() {
     const {
       isbn, title, description, edition, preview, price,
@@ -168,9 +192,15 @@ class EditBook extends Component {
 
     return (
       <EditBookContainer className="new_post">
-        <h1>
-          {`Editando - ${originalBook.title}`}
-        </h1>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <h1>
+            {`Editando - ${originalBook.title}`}
+          </h1>
+
+          <button type="button" onClick={this.handleDeleteBook} className="button danger">
+            Deletar Quadrinho
+          </button>
+        </div>
         <form className="form" onSubmit={this.handleSubmit}>
           <div>
             <div className="thumbnail">
@@ -310,7 +340,7 @@ class EditBook extends Component {
             autofocus={false}
           />
 
-          <button type="submit" className="submit">Enviar</button>
+          <button type="submit" className="submit button">Salvar</button>
         </form>
       </EditBookContainer>
     );

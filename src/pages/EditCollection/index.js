@@ -117,12 +117,18 @@ class EditCollection extends Component {
 
     return (
       <EditCollectionContainer className="new_post">
-        <h1>
-          {`Editando - ${originalCollection.title}`}
-        </h1>
         { error && error.code === 401 && (
-          <Redirect to="/login" />
+        <Redirect to="/login" />
         )}
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <h1>
+            {`Editando - ${originalCollection.title}`}
+          </h1>
+
+          <button type="button" onClick={this.handleDelete} className="button danger">
+            Deletar Coleção
+          </button>
+        </div>
         <form className="form" onSubmit={this.handleSubmit}>
           <div>
             <div className="thumbnail">
@@ -153,9 +159,6 @@ class EditCollection extends Component {
             value={description}
           />
 
-          <button type="button" onClick={this.handleDelete} className="button danger">
-            Deletar Coleção
-          </button>
           <button type="submit" className="button">Salvar</button>
         </form>
       </EditCollectionContainer>
