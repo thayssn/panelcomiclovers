@@ -219,17 +219,16 @@ class EditBook extends Component {
               onChange={this.handleFileChange}
             />
           </div>
-          <p>ISBN-13 (obrigatório)</p>
+          <p>ISBN-13</p>
           <input
             type="text"
             name="isbn"
             placeholder="ISBN-13"
             onChange={this.handleChange}
             value={isbn}
-            required
           />
 
-          <p>ISBN-10 (opcional)</p>
+          <p>ISBN-10</p>
           <input
             type="text"
             name="isbn_10"

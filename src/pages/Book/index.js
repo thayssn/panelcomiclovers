@@ -38,10 +38,12 @@ class Book extends Component {
               <span>Edição: </span>
               {book.edition}
             </div>
+            { book.isbn && (
             <div className="book__info__block book__isbn">
               <span>ISBN: </span>
               {book.isbn}
             </div>
+            )}
             <div className="book__info__block book__writer">
               <span>Escritores: </span>
               {book.writers && book.writers.map((writer, index) => (index < book.writers.length - 1 ? `${writer.name}, ` : writer.name))}
