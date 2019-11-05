@@ -9,6 +9,7 @@ class CreateBook extends Component {
     preview: null,
     image: null,
     isbn: '',
+    isbn_10: '',
     title: '',
     description: '',
     edition: '',
@@ -49,6 +50,7 @@ class CreateBook extends Component {
     const {
       image,
       isbn,
+      isbn_10,
       title,
       description,
       edition,
@@ -64,6 +66,7 @@ class CreateBook extends Component {
 
     const payload = {
       isbn,
+      isbn_10,
       title,
       edition,
       description,
@@ -121,7 +124,7 @@ class CreateBook extends Component {
 
   render() {
     const {
-      isbn, title, description, edition, preview, price,
+      isbn, isbn_10, title, description, edition, preview, price,
       pages, publishing_date, format,
       illustrators, writers, licensors, publishers,
       selectedIllustrators, selectedWriters, selectedLicensors, selectedPublishers,
@@ -141,13 +144,23 @@ class CreateBook extends Component {
               onChange={this.handleFileChange}
             />
           </div>
-          <p>ISBN (obrigatório)</p>
+          <p>ISBN-13 (obrigatório)</p>
           <input
             type="text"
             name="isbn"
-            placeholder="ISBN"
+            placeholder="ISBN-13"
             onChange={this.handleChange}
             value={isbn}
+            required
+          />
+
+          <p>ISBN-10 (opcional)</p>
+          <input
+            type="text"
+            name="isbn_10"
+            placeholder="ISBN-10"
+            onChange={this.handleChange}
+            value={isbn_10}
             required
           />
 
