@@ -14,6 +14,7 @@ class EditBook extends Component {
     preview: null,
     image: null,
     isbn: '',
+    isbn_10: '',
     title: '',
     description: '',
     edition: '',
@@ -72,6 +73,7 @@ class EditBook extends Component {
       originalBook,
       image,
       isbn,
+      isbn_10,
       title,
       description,
       edition,
@@ -91,6 +93,11 @@ class EditBook extends Component {
     if (isbn !== originalBook.isbn) {
       payload.isbn = isbn;
     }
+
+    if (isbn_10 !== originalBook.isbn_10) {
+      payload.isbn_10 = isbn_10;
+    }
+
     if (title !== originalBook.title) {
       payload.title = title;
     }
@@ -183,7 +190,7 @@ class EditBook extends Component {
 
   render() {
     const {
-      isbn, title, description, edition, preview, price,
+      isbn, isbn_10, title, description, edition, preview, price,
       pages, publishing_date, format,
       illustrators, writers, licensors, publishers,
       selectedIllustrators, selectedWriters, selectedLicensors, selectedPublishers,
@@ -212,14 +219,23 @@ class EditBook extends Component {
               onChange={this.handleFileChange}
             />
           </div>
-          <p>ISBN (obrigatório)</p>
+          <p>ISBN_13 (obrigatório)</p>
           <input
             type="text"
             name="isbn"
-            placeholder="ISBN"
+            placeholder="ISBN_13"
             onChange={this.handleChange}
             value={isbn}
             required
+          />
+
+          <p>ISBN_10 (opcional)</p>
+          <input
+            type="text"
+            name="isbn_10"
+            placeholder="ISBN_10"
+            onChange={this.handleChange}
+            value={isbn_10}
           />
 
           <p>Título (obrigatório)</p>
