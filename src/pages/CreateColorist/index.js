@@ -20,7 +20,7 @@ class CreateColorist extends Component {
       await api.post('colorists', { name });
       history.push('/colorists');
     } catch (err) {
-      alert('Houve um erro ao cadastrar um ilustrador');
+      alert('Houve um erro ao cadastrar um colorista');
     }
   }
 
@@ -35,7 +35,7 @@ class CreateColorist extends Component {
 
     return (
       <CreateColoristContainer className="new_post">
-        <h1>Cadastrar Ilustrador</h1>
+        <h1>Cadastrar Colorista</h1>
         <form className="form" onSubmit={this.handleSubmit}>
           <input
             type="text"
