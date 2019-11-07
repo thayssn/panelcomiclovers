@@ -21,7 +21,7 @@ class Books extends Component {
 
   async componentDidMount() {
     try {
-      let { data: { total, books } } = await api.get('books');
+      const { data: { total, books } } = await api.get('books');
 
       const { location } = this.props;
       const queries = queryString.parse(location.search);
@@ -38,16 +38,18 @@ class Books extends Component {
 
           this.setState({ collection });
 
-          books = books.map((book) => {
+          const mappedBooks = books.map((book) => {
             const selected = collection.books.find(collectionBook => collectionBook.id === book.id);
             return { ...book, selected: selected || false };
           });
+          this.setState({ books: mappedBooks, originalBooks: mappedBooks, total });
         } catch (err) {
+          console.log(err);
           return;
         }
+      } else {
+        this.setState({ books, originalBooks: books, total });
       }
-
-      this.setState({ books, originalBooks: books, total });
     } catch (err) {
       console.log(err);
     }
@@ -59,7 +61,7 @@ class Books extends Component {
     const selectedBooks = books.filter(book => book.selected).map(book => book.id);
     try {
       const userToken = cookies.get('userToken');
-      await api.post(`collections/${collection.id}/books`, {
+      await api.put(`collections/${collection.id}/books`, {
         books: selectedBooks,
       }, {
         headers: {
