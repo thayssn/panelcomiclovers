@@ -12,6 +12,7 @@ export default function Header() {
           <Link to="/books">Quadrinhos</Link>
           <Link to="/collections">Coleções Públicas</Link>
           <Link to="/illustrators">Ilustradores</Link>
+          <Link to="/colorists">Coloristas</Link>
           <Link to="/licensors">Licenciantes</Link>
           <Link to="/writers">Autores</Link>
           <Link to="/publishers">Editoras</Link>

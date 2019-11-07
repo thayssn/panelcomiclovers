@@ -51,7 +51,10 @@ class Book extends Component {
             <div className="book__info__block book__illustrator">
               <span>Ilustradores: </span>
               {book.illustrators && book.illustrators.map((illustrator, index) => (index < book.illustrators.length - 1 ? `${illustrator.name}, ` : illustrator.name))}
-
+            </div>
+            <div className="book__info__block book__colorist">
+              <span>Coloristas: </span>
+              {book.colorists && book.colorists.map((colorist, index) => (index < book.colorists.length - 1 ? `${colorist.name}, ` : colorist.name))}
             </div>
             <div className="book__info__block book__publisher">
               <span>Editoras: </span>

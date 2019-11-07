@@ -10,6 +10,8 @@ import CreateBook from './pages/CreateBook';
 import EditBook from './pages/EditBook';
 import Illustrators from './pages/Illustrators';
 import CreateIllustrator from './pages/CreateIllustrator';
+import Colorists from './pages/Colorists';
+import CreateColorist from './pages/CreateColorist';
 import Licensors from './pages/Licensors';
 import CreateLicensor from './pages/CreateLicensor';
 import Publishers from './pages/Publishers';
@@ -47,6 +49,8 @@ function Routes() {
       <Route exact path="/publishers/create" component={CreatePublisher} />
       <Route exact path="/illustrators" component={Illustrators} />
       <Route exact path="/illustrators/create" component={CreateIllustrator} />
+      <Route exact path="/colorists" component={Colorists} />
+      <Route exact path="/colorists/create" component={CreateColorist} />
 
       <Route exact path="/collections/create" component={CreateCollection} />
       <Route exact path="/collections/:id" component={Collection} />

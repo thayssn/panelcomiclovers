@@ -23,10 +23,12 @@ class EditBook extends Component {
     publishing_date: '',
     format: '',
     illustrators: [],
+    colorists: [],
     writers: [],
     licensors: [],
     publishers: [],
     selectedIllustrators: [],
+    selectedColorists: [],
     selectedWriters: [],
     selectedLicensors: [],
     selectedPublishers: [],
@@ -40,6 +42,7 @@ class EditBook extends Component {
       originalBook: book,
       ...book,
       selectedIllustrators: book.illustrators,
+      selectedColorists: book.colorists,
       selectedWriters: book.writers,
       selectedLicensors: book.licensors,
       selectedPublishers: book.publishers,
@@ -51,6 +54,9 @@ class EditBook extends Component {
   async componentDidMount() {
     const { data: illustrators } = await api.get('illustrators');
     this.setState({ illustrators });
+
+    const { data: colorists } = await api.get('colorists');
+    this.setState({ colorists });
 
     const { data: publishers } = await api.get('publishers');
     this.setState({ publishers });
@@ -82,6 +88,7 @@ class EditBook extends Component {
       publishing_date,
       format,
       selectedIllustrators,
+      selectedColorists,
       selectedWriters,
       selectedLicensors,
       selectedPublishers,
@@ -121,6 +128,7 @@ class EditBook extends Component {
     }
 
     payload.illustrators = selectedIllustrators.map(i => i.id);
+    payload.colorists = selectedColorists.map(i => i.id);
     payload.writers = selectedWriters.map(i => i.id);
     payload.licensors = selectedLicensors.map(i => i.id);
     payload.publishers = selectedPublishers.map(i => i.id);
@@ -192,8 +200,8 @@ class EditBook extends Component {
     const {
       isbn, isbn_10, title, description, edition, preview, price,
       pages, publishing_date, format,
-      illustrators, writers, licensors, publishers,
-      selectedIllustrators, selectedWriters, selectedLicensors, selectedPublishers,
+      illustrators, colorists, writers, licensors, publishers,
+      selectedIllustrators, selectedColorists, selectedWriters, selectedLicensors, selectedPublishers,
       originalBook,
     } = this.state;
 
@@ -313,6 +321,19 @@ class EditBook extends Component {
             autoresize={false}
             minQueryLength={0}
             placeholder="Adicionar ilustrador"
+            autofocus={false}
+          />
+
+          <p>Coloristas</p>
+          <ReactTags
+            maxSuggestionsLength={50}
+            tags={selectedColorists}
+            suggestions={colorists}
+            handleDelete={i => this.handleDelete(i, 'selectedColorists')}
+            handleAddition={tag => this.handleAddition(tag, 'selectedColorists')}
+            autoresize={false}
+            minQueryLength={0}
+            placeholder="Adicionar colorista"
             autofocus={false}
           />
 

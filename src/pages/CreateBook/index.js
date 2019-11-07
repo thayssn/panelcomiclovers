@@ -18,10 +18,12 @@ class CreateBook extends Component {
     publishing_date: '',
     format: '',
     illustrators: [],
+    colorists: [],
     writers: [],
     licensors: [],
     publishers: [],
     selectedIllustrators: [],
+    selectedColorists: [],
     selectedWriters: [],
     selectedLicensors: [],
     selectedPublishers: [],
@@ -30,6 +32,9 @@ class CreateBook extends Component {
   async componentDidMount() {
     const { data: illustrators } = await api.get('illustrators');
     this.setState({ illustrators });
+
+    const { data: colorists } = await api.get('colorists');
+    this.setState({ colorists });
 
     const { data: publishers } = await api.get('publishers');
     this.setState({ publishers });
@@ -59,6 +64,7 @@ class CreateBook extends Component {
       publishing_date,
       format,
       selectedIllustrators,
+      selectedColorists,
       selectedWriters,
       selectedLicensors,
       selectedPublishers,
@@ -75,6 +81,7 @@ class CreateBook extends Component {
       publishing_date: publishing_date || null,
       format,
       illustrators: selectedIllustrators.map(i => i.id),
+      colorists: selectedColorists.map(i => i.id),
       writers: selectedWriters.map(i => i.id),
       licensors: selectedLicensors.map(i => i.id),
       publishers: selectedPublishers.map(i => i.id),
@@ -126,8 +133,8 @@ class CreateBook extends Component {
     const {
       isbn, isbn_10, title, description, edition, preview, price,
       pages, publishing_date, format,
-      illustrators, writers, licensors, publishers,
-      selectedIllustrators, selectedWriters, selectedLicensors, selectedPublishers,
+      illustrators, colorists, writers, licensors, publishers,
+      selectedIllustrators, selectedColorists, selectedWriters, selectedLicensors, selectedPublishers,
     } = this.state;
 
     return (
@@ -237,6 +244,19 @@ class CreateBook extends Component {
             autoresize={false}
             minQueryLength={0}
             placeholder="Adicionar ilustrador"
+            autofocus={false}
+          />
+
+          <p>Coloristas</p>
+          <ReactTags
+            maxSuggestionsLength={50}
+            tags={selectedColorists}
+            suggestions={colorists}
+            handleDelete={i => this.handleDelete(i, 'selectedColorists')}
+            handleAddition={tag => this.handleAddition(tag, 'selectedColorists')}
+            autoresize={false}
+            minQueryLength={0}
+            placeholder="Adicionar colorista"
             autofocus={false}
           />
 
