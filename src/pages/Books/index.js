@@ -14,13 +14,14 @@ class Books extends Component {
   state = {
     originalBooks: [],
     books: [],
+    total: 0,
     collection: null,
     searchTerm: '',
   }
 
   async componentDidMount() {
     try {
-      let { data: books } = await api.get('books');
+      let { data: { total, books } } = await api.get('books');
 
       const { location } = this.props;
       const queries = queryString.parse(location.search);
@@ -46,7 +47,7 @@ class Books extends Component {
         }
       }
 
-      this.setState({ books, originalBooks: books });
+      this.setState({ books, originalBooks: books, total });
     } catch (err) {
       console.log(err);
     }
@@ -99,7 +100,9 @@ class Books extends Component {
   }
 
   render() {
-    const { books, collection, searchTerm } = this.state;
+    const {
+      books, total, collection, searchTerm,
+    } = this.state;
     const selectedBooks = books.filter(book => book.selected);
     return (
       <BooksList>
@@ -111,7 +114,7 @@ class Books extends Component {
                 <p>Adicionar quadrinhos</p>
               </div>
             )
-            : <h1>Quadrinhos</h1>
+            : <h1>{`Quadrinhos (${total})`}</h1>
           }
           <div>
             {collection ? (
