@@ -35,7 +35,7 @@ class Book extends Component {
           </div>
           <div className="book__info">
             <div className="book__info__block book__edition">
-              <span>Edição: </span>
+              <span>Volume: </span>
               {book.edition}
             </div>
             { book.isbn && (

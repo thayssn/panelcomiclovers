@@ -143,7 +143,7 @@ class Books extends Component {
                   {book.edition && ` - ${book.edition}`}
                 </Link>
               </div>
-              <div className="book__edition">{`Edição: ${book.edition}`}</div>
+              <div className="book__edition">{`Volume: ${book.edition}`}</div>
               {book.isbn && (
                 <div className="book__isbn">{`ISBN: ${book.isbn}`}</div>
               )}

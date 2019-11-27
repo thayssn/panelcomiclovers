@@ -179,11 +179,11 @@ class CreateBook extends Component {
             required
           />
 
-          <p>Edição</p>
+          <p>Volume</p>
           <input
             type="text"
             name="edition"
-            placeholder="Edição"
+            placeholder="Volume"
             onChange={this.handleChange}
             value={edition}
           />
