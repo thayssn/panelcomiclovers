@@ -4,7 +4,8 @@ import { Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
 import Users from './pages/Users';
 import CreateUser from './pages/CreateUser';
-import Books from './pages/Books/index';
+import Approval from './pages/Approval';
+import Books from './pages/Books';
 import BooksUsers from './pages/Books/pendentes';
 import Book from './pages/Book';
 import CreateBook from './pages/CreateBook';
@@ -42,6 +43,7 @@ function Routes() {
       <Route exact path="/books/:id/edit" component={EditBook} />
       <Route exact path="/books" component={Books} />
       <Route exact path="/books/pendings" component={BooksUsers} />
+      <Route exact path="/approval" component={Approval} />
 
       <Route exact path="/writers" component={Writers} />
       <Route exact path="/writers/create" component={CreateWriter} />

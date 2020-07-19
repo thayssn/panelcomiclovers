@@ -35,12 +35,26 @@ class EditBook extends Component {
   };
 
   async componentWillMount() {
-    const { match } = this.props;
+    const { match, history } = this.props;
     const { id } = match.params;
-    const { data: book } = await api.get(`books/${id}`);
+    const userToken = cookies.get('userToken');
+
+    if (!userToken) history.push('/login');
+
+    const { data: book } = await api.get(`books/${id}`, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
     this.setState({
       originalBook: book,
       ...book,
+      isbn_10: book.isbn_10 || '',
+      edition: book.edition || '',
+      pages: book.pages || 0,
+      format: book.format || '',
+      description: book.description || '',
+      price: book.price || '',
       selectedIllustrators: book.illustrators,
       selectedColorists: book.colorists,
       selectedWriters: book.writers,
@@ -52,19 +66,26 @@ class EditBook extends Component {
   }
 
   async componentDidMount() {
-    const { data: illustrators } = await api.get('illustrators');
+    const userToken = cookies.get('userToken');
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    };
+
+    const { data: illustrators } = await api.get('illustrators', headers);
     this.setState({ illustrators });
 
-    const { data: colorists } = await api.get('colorists');
+    const { data: colorists } = await api.get('colorists', headers);
     this.setState({ colorists });
 
-    const { data: publishers } = await api.get('publishers');
+    const { data: publishers } = await api.get('publishers', headers);
     this.setState({ publishers });
 
-    const { data: writers } = await api.get('writers');
+    const { data: writers } = await api.get('writers', headers);
     this.setState({ writers });
 
-    const { data: licensors } = await api.get('licensors');
+    const { data: licensors } = await api.get('licensors', headers);
     this.setState({ licensors });
   }
 
@@ -101,7 +122,7 @@ class EditBook extends Component {
       payload.isbn = isbn;
     }
 
-    if (isbn_10 !== originalBook.isbn_10) {
+    if (isbn_10 !== originalBook.isbn_10 && isbn_10 !== '') {
       payload.isbn_10 = isbn_10;
     }
 
@@ -137,7 +158,13 @@ class EditBook extends Component {
     data.append('image', image);
 
     try {
-      await api.put(`books/${id}`, data);
+      const userToken = cookies.get('userToken');
+
+      await api.put(`books/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
       history.push(`/books/${id}`);
     } catch (err) {
       console.log(err);
@@ -178,7 +205,6 @@ class EditBook extends Component {
   handleDeleteBook = async () => {
     try {
       const userToken = cookies.get('userToken');
-
       const { history, match } = this.props;
       const { id } = match.params;
       const confirmDelete = window.confirm('Tem certeza que deseja deletar?');
@@ -201,7 +227,8 @@ class EditBook extends Component {
       isbn, isbn_10, title, description, edition, preview, price,
       pages, publishing_date, format,
       illustrators, colorists, writers, licensors, publishers,
-      selectedIllustrators, selectedColorists, selectedWriters, selectedLicensors, selectedPublishers,
+      selectedIllustrators, selectedColorists, selectedWriters,
+      selectedLicensors, selectedPublishers,
       originalBook,
     } = this.state;
 

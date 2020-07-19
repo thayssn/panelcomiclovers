@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import queryString from 'query-string';
 import Cookies from 'universal-cookie';
 import api from '../../services/api';
@@ -17,17 +17,29 @@ class Books extends Component {
     total: 0,
     collection: null,
     searchTerm: '',
+    redirect: false,
   }
 
   async componentDidMount() {
     try {
-      const { data: { total, books } } = await api.get('books');
+      const userToken = cookies.get('userToken');
+      if (!userToken) {
+        (
+          this.setState({ redirect: true })
+        );
+      }
+      const whereParams = { status: 'Aprovado' };
+      const { data: { total, books } } = await api.get('books', {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+        params: { whereParams: JSON.stringify(whereParams) },
+      });
 
       const { location } = this.props;
       const queries = queryString.parse(location.search);
 
       if (queries.collection) {
-        const userToken = cookies.get('userToken');
         const collectionId = parseInt(queries.collection, 0);
         try {
           const { data: collection } = await api.get(`collections/${collectionId}`, {
@@ -103,11 +115,12 @@ class Books extends Component {
 
   render() {
     const {
-      books, total, collection, searchTerm,
+      books, total, collection, searchTerm, redirect,
     } = this.state;
     const selectedBooks = books.filter(book => book.selected);
     return (
       <BooksList>
+        {redirect && <Redirect to="/login" />}
         <header>
           { collection
             ? (

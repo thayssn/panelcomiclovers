@@ -1,33 +1,72 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import api from '../../services/api';
 import env from '../../env';
 
 // using styled-components
 import BookContainer from './style';
 
+const cookies = new Cookies();
+
 class Book extends Component {
   state = {
     book: {},
+    redirect: false,
   }
 
   async componentWillMount() {
     const { match } = this.props;
     const { id } = match.params;
-    const { data: book } = await api.get(`books/${id}`);
+    const userToken = cookies.get('userToken');
+    if (!userToken) {
+      (
+        this.setState({ redirect: true })
+      );
+    }
+    const { data: book } = await api.get(`books/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
     this.setState({ book });
   }
 
+
+  changeStatus = async (id, status) => {
+    const { history } = this.props;
+    const userToken = cookies.get('userToken');
+    await api.put(`books/${id}/status`, {
+      status,
+    }, {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+    history.push('/books/');
+  }
+
   render() {
-    const { book } = this.state;
+    const { book, redirect } = this.state;
     return (
       <BookContainer>
+        {redirect && <Redirect to="/login" />}
         <header className="book__header">
           <h1 className="book__title">
             {book.title}
             {book.edition && ` - ${book.edition}`}
           </h1>
-          <Link to={`/books/${book.id}/edit`} className="button">Editar</Link>
+          <div>
+            {book.status === 'Pendente'
+            && (
+            <button type="button" className="button success" onClick={() => this.changeStatus(book.id, 'Aprovado')}>
+              {'Aprovar'}
+            </button>
+            )
+            }
+            <Link to={`/books/${book.id}/edit`} className="button">Editar</Link>
+          </div>
         </header>
         <article className="book" key={book.id}>
           <div className="book__thumbnail">

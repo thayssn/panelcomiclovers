@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 import api from '../../services/api';
 import CreateBookContainer from './style';
 // import './New.scss';
 const ReactTags = require('react-tag-autocomplete');
 
+const cookies = new Cookies();
+
 class CreateBook extends Component {
   state = {
+    redirect: false,
     preview: null,
     image: null,
     isbn: '',
@@ -30,23 +35,37 @@ class CreateBook extends Component {
   };
 
   async componentDidMount() {
-    const { data: illustrators } = await api.get('illustrators');
+    const userToken = cookies.get('userToken');
+    const headers = {
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    };
+
+    const { data: illustrators } = await api.get('illustrators', headers);
     this.setState({ illustrators });
 
-    const { data: colorists } = await api.get('colorists');
+    const { data: colorists } = await api.get('colorists', headers);
     this.setState({ colorists });
 
-    const { data: publishers } = await api.get('publishers');
+    const { data: publishers } = await api.get('publishers', headers);
     this.setState({ publishers });
 
-    const { data: writers } = await api.get('writers');
+    const { data: writers } = await api.get('writers', headers);
     this.setState({ writers });
 
-    const { data: licensors } = await api.get('licensors');
+    const { data: licensors } = await api.get('licensors', headers);
     this.setState({ licensors });
   }
 
   handleSubmit = async (e) => {
+    const userToken = cookies.get('userToken');
+    if (!userToken) {
+      (
+        this.setState({ redirect: true })
+      );
+    }
+
     e.preventDefault();
 
     const { history } = this.props;
@@ -72,7 +91,7 @@ class CreateBook extends Component {
 
     const payload = {
       isbn,
-      isbn_10,
+      isbn_10: isbn_10 || null,
       title,
       edition,
       description,
@@ -92,7 +111,11 @@ class CreateBook extends Component {
     data.append('image', image);
 
     try {
-      await api.post('books', data);
+      await api.post('books', data, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
       history.push('/books');
     } catch (err) {
       alert('Houve um erro ao cadastrar o quadrinho.');
@@ -131,6 +154,7 @@ class CreateBook extends Component {
 
   render() {
     const {
+      redirect,
       isbn, isbn_10, title, description, edition, preview, price,
       pages, publishing_date, format,
       illustrators, colorists, writers, licensors, publishers,
@@ -139,6 +163,7 @@ class CreateBook extends Component {
 
     return (
       <CreateBookContainer className="new_post">
+        {redirect && <Redirect to="/login" />}
         <h1>Cadastrar novo quadrinho</h1>
         <form className="form" onSubmit={this.handleSubmit}>
           <div>
