@@ -4,6 +4,7 @@ import Cookies from 'universal-cookie';
 import api from '../../services/api';
 import EditCollectionContainer from './style';
 import env from '../../env';
+import { getUserToken } from '../../services/auth';
 
 const cookies = new Cookies();
 
@@ -18,12 +19,8 @@ class EditCollection extends Component {
   };
 
 
-  async componentWillMount() {
-    const userToken = cookies.get('userToken');
-    if (!userToken) {
-      this.setState({ error: { code: 401 } });
-    }
-
+  async componentDidMount() {
+    const userToken = getUserToken();
     const { match } = this.props;
     const { id } = match.params;
     const { data: collection } = await api.get(`public/collections/${id}`, {
@@ -40,7 +37,7 @@ class EditCollection extends Component {
   }
 
   handleSubmit = async (e) => {
-    const userToken = cookies.get('userToken');
+    const userToken = getUserToken();
     e.preventDefault();
 
     const { history, match } = this.props;
@@ -117,9 +114,6 @@ class EditCollection extends Component {
 
     return (
       <EditCollectionContainer className="new_post">
-        { error && error.code === 401 && (
-        <Redirect to="/login" />
-        )}
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <h1>
             {`Editando - ${originalCollection.title}`}

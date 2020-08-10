@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import Cookies from 'universal-cookie';
+import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import env from '../../env';
 
 // using styled-components
 import BooksList from './style';
-
-const cookies = new Cookies();
+import { getUserToken } from '../../services/auth';
 
 class Approval extends Component {
   state = {
@@ -15,17 +13,11 @@ class Approval extends Component {
     books: [],
     total: 0,
     searchTerm: '',
-    redirect: false,
   }
 
   async componentDidMount() {
     try {
-      const userToken = cookies.get('userToken');
-      if (!userToken) {
-        (
-          this.setState({ redirect: true })
-        );
-      }
+      const userToken = getUserToken();
       const whereParams = { status: 'Pendente' };
       const { data: { total, books } } = await api.get('books', {
         headers: {
@@ -56,7 +48,7 @@ class Approval extends Component {
 
   changeStatus = async (id, status) => {
     const { books, total } = this.state;
-    const userToken = cookies.get('userToken');
+    const userToken = getUserToken();
     await api.put(`books/${id}/status`, {
       status,
     }, {
@@ -69,11 +61,10 @@ class Approval extends Component {
 
   render() {
     const {
-      books, total, searchTerm, redirect,
+      books, total, searchTerm,
     } = this.state;
     return (
       <BooksList>
-        {redirect && <Redirect to="/login" />}
         <header>
           <h1>{`Quadrinhos pendentes (${total})`}</h1>
           <div>

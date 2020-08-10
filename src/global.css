@@ -30,3 +30,7 @@ body {
 .button.success{
   background: linear-gradient(to left,  #5ae491,#45d67f);
 }
+
+.button--small{
+  font-size: 12px;
+}

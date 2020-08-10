@@ -1,29 +1,22 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import Cookies from 'universal-cookie';
 import api from '../../services/api';
 import env from '../../env';
+import { isLoggedIn, getUserToken } from '../../services/auth';
 
 // using styled-components
 import BookContainer from './style';
 
-const cookies = new Cookies();
-
 class Book extends Component {
   state = {
     book: {},
-    redirect: false,
   }
 
-  async componentWillMount() {
+  async componentDidMount() {
     const { match } = this.props;
     const { id } = match.params;
-    const userToken = cookies.get('userToken');
-    if (!userToken) {
-      (
-        this.setState({ redirect: true })
-      );
-    }
+    const userToken = getUserToken();
+
     const { data: book } = await api.get(`books/${id}`,
       {
         headers: {
@@ -36,7 +29,7 @@ class Book extends Component {
 
   changeStatus = async (id, status) => {
     const { history } = this.props;
-    const userToken = cookies.get('userToken');
+    const userToken = getUserToken();
     await api.put(`books/${id}/status`, {
       status,
     }, {
@@ -48,10 +41,10 @@ class Book extends Component {
   }
 
   render() {
-    const { book, redirect } = this.state;
+    const { book } = this.state;
     return (
       <BookContainer>
-        {redirect && <Redirect to="/login" />}
+        { !isLoggedIn() && <Redirect to="/login" />}
         <header className="book__header">
           <h1 className="book__title">
             {book.title}

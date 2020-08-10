@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import Cookies from 'universal-cookie';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 import LoginContainer from './style';
+import { setUserToken } from '../../services/auth';
 // import './New.scss';
-
-const cookies = new Cookies();
 
 class Login extends Component {
   state = {
@@ -24,7 +22,7 @@ class Login extends Component {
 
     try {
       const { data } = await api.post('auth', { email, password });
-      cookies.set('userToken', data.token, { path: '/' });
+      setUserToken(data.token);
       history.push('/books');
     } catch (err) {
       alert('Houve um erro ao fazer o login. Verifique se as informações estão corretas.');

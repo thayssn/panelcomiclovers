@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import Cookies from 'universal-cookie';
 import api from '../../services/api';
 import env from '../../env';
+import { getUserToken, isLoggedIn } from '../../services/auth';
 
 // using styled-components
 import CollectionContainer from './style';
 
-const cookies = new Cookies();
-
-
 class Collection extends Component {
   state = {
     collection: {},
-    error: null,
   }
 
-  async componentWillMount() {
-    const userToken = cookies.get('userToken');
-    if (!userToken) {
-      this.setState({ error: { code: 401 } });
-    }
+  async componentDidMount() {
+    const userToken = getUserToken();
 
     const { match } = this.props;
     const { id } = match.params;
@@ -34,18 +27,11 @@ class Collection extends Component {
       this.setState({ collection });
     } catch (err) {
       console.log(err);
-      this.setState({ error: { code: 400 } });
     }
   }
 
   removeBook = async (bookId) => {
-    const userToken = cookies.get('userToken');
-    if (!userToken) {
-      this.setState({ error: { code: 401 } });
-    }
-
-    console.log(userToken);
-
+    const userToken = getUserToken();
     try {
       const { collection } = this.state;
 
@@ -57,7 +43,6 @@ class Collection extends Component {
           Authorization: `Bearer ${userToken}`,
         },
       });
-      console.log(collection, bookId, id);
 
       this.setState({
         collection: {
@@ -67,21 +52,19 @@ class Collection extends Component {
       });
     } catch (err) {
       console.log(err);
-      this.setState({ error: { code: 400 } });
     }
   }
 
   render() {
-    const { collection, error } = this.state;
+    const { collection } = this.state;
     return (
       <CollectionContainer>
+        { !isLoggedIn() && <Redirect to="/login" /> }
         <header className="collection__header">
           <p />
           <Link to={`/collections/${collection.id}/edit`} className="button">Editar</Link>
         </header>
-        { error && error.code === 401 && (
-          <Redirect to="/login" />
-        )}
+
         <article className="collection" key={collection.id}>
           <div className="collection__thumbnail">
             { collection.thumbnail && <img src={`${env.baseUrl}/${collection.thumbnail}`} alt="" />}

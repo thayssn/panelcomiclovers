@@ -32,6 +32,16 @@ class CreateBook extends Component {
     selectedWriters: [],
     selectedLicensors: [],
     selectedPublishers: [],
+    showIllustratorModal: false,
+    illustratorName: '',
+    showColoristModal: false,
+    coloristName: '',
+    showWriterModal: false,
+    writerName: '',
+    showPublisherModal: false,
+    publisherName: '',
+    showLicensorModal: false,
+    licensorName: '',
   };
 
   async componentDidMount() {
@@ -152,13 +162,129 @@ class CreateBook extends Component {
     this.setState({ [key]: selectedValues });
   }
 
+  createIllustrator = async () => {
+    const {
+      illustratorName,
+      selectedIllustrators,
+      illustrators,
+    } = this.state;
+
+    try {
+      const { data: illustrator } = await api.post('illustrators', { name: illustratorName });
+      this.setState({
+        showIllustratorModal: false,
+        illustratorName: '',
+        selectedIllustrators: [...selectedIllustrators, illustrator],
+        illustrators: [...illustrators, illustrator],
+      });
+    } catch (err) {
+      console.log(err);
+      alert('Houve um erro ao cadastrar um ilustrador');
+      this.setState({ showIllustratorModal: false });
+    }
+  }
+
+  createColorist = async () => {
+    const {
+      coloristName,
+      selectedColorists,
+      colorists,
+    } = this.state;
+
+    try {
+      const { data: colorist } = await api.post('colorists', { name: coloristName });
+      this.setState({
+        showColoristModal: false,
+        coloristName: '',
+        selectedColorists: [...selectedColorists, colorist],
+        colorists: [...colorists, colorist],
+      });
+    } catch (err) {
+      console.log(err);
+      alert('Houve um erro ao cadastrar um colorista');
+      this.setState({ showColoristModal: false });
+    }
+  }
+
+  createWriter = async () => {
+    const {
+      writerName,
+      selectedWriters,
+      writers,
+    } = this.state;
+
+    try {
+      const { data: writer } = await api.post('writers', { name: writerName });
+      this.setState({
+        showWriterModal: false,
+        writerName: '',
+        selectedWriters: [...selectedWriters, writer],
+        writers: [...writers, writer],
+      });
+    } catch (err) {
+      console.log(err);
+      alert('Houve um erro ao cadastrar um escritor');
+      this.setState({ showWriterModal: false });
+    }
+  }
+
+  createPublisher = async () => {
+    const {
+      publisherName,
+      selectedPublishers,
+      publishers,
+    } = this.state;
+
+    try {
+      const { data: publisher } = await api.post('publishers', { name: publisherName });
+      this.setState({
+        showPublisherModal: false,
+        publisherName: '',
+        selectedPublishers: [...selectedPublishers, publisher],
+        publishers: [...publishers, publisher],
+      });
+    } catch (err) {
+      console.log(err);
+      alert('Houve um erro ao cadastrar uma editora');
+      this.setState({ showPublisherModal: false });
+    }
+  }
+
+  createLicensor = async () => {
+    const {
+      licensorName,
+      selectedLicensors,
+      licensors,
+    } = this.state;
+
+    try {
+      const { data: licensor } = await api.post('licensors', { name: licensorName });
+      this.setState({
+        showLicensorModal: false,
+        licensorName: '',
+        selectedLicensors: [...selectedLicensors, licensor],
+        licensors: [...licensors, licensor],
+      });
+    } catch (err) {
+      console.log(err);
+      alert('Houve um erro ao cadastrar um licenciante');
+      this.setState({ showLicensorModal: false });
+    }
+  }
+
   render() {
     const {
       redirect,
       isbn, isbn_10, title, description, edition, preview, price,
       pages, publishing_date, format,
       illustrators, colorists, writers, licensors, publishers,
-      selectedIllustrators, selectedColorists, selectedWriters, selectedLicensors, selectedPublishers,
+      selectedIllustrators, selectedColorists, selectedWriters,
+      selectedLicensors, selectedPublishers,
+      showIllustratorModal, illustratorName,
+      showColoristModal, coloristName,
+      showWriterModal, writerName,
+      showPublisherModal, publisherName,
+      showLicensorModal, licensorName,
     } = this.state;
 
     return (
@@ -271,6 +397,26 @@ class CreateBook extends Component {
             placeholder="Adicionar ilustrador"
             autofocus={false}
           />
+          {showIllustratorModal ? (
+            <div className="Modal">
+              <input
+                type="text"
+                name="illustratorName"
+                placeholder="Novo Ilustrador"
+                onChange={this.handleChange}
+                value={illustratorName}
+              />
+              <button type="button" className="button button--small" onClick={this.createIllustrator}>Cadastrar </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="button button--small"
+              onClick={() => { this.setState({ showIllustratorModal: !showIllustratorModal }); }}
+            >
+            Criar Novo Ilustrador
+            </button>
+          ) }
 
           <p>Coloristas</p>
           <ReactTags
@@ -284,6 +430,26 @@ class CreateBook extends Component {
             placeholder="Adicionar colorista"
             autofocus={false}
           />
+          {showColoristModal ? (
+            <div className="Modal">
+              <input
+                type="text"
+                name="coloristName"
+                placeholder="Novo Colorista"
+                onChange={this.handleChange}
+                value={coloristName}
+              />
+              <button type="button" className="button button--small" onClick={this.createColorist}>Cadastrar </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="button button--small"
+              onClick={() => { this.setState({ showColoristModal: !showColoristModal }); }}
+            >
+            Criar Novo Colorista
+            </button>
+          ) }
 
           <p>Escritores</p>
           <ReactTags
@@ -298,6 +464,28 @@ class CreateBook extends Component {
             autofocus={false}
           />
 
+
+          {showWriterModal ? (
+            <div className="Modal">
+              <input
+                type="text"
+                name="writerName"
+                placeholder="Novo Escritor"
+                onChange={this.handleChange}
+                value={writerName}
+              />
+              <button type="button" className="button button--small" onClick={this.createWriter}>Cadastrar </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="button button--small"
+              onClick={() => { this.setState({ showWriterModal: !showWriterModal }); }}
+            >
+            Criar Novo Escritor
+            </button>
+          ) }
+
           <p>Licenciantes</p>
           <ReactTags
             maxSuggestionsLength={50}
@@ -310,6 +498,27 @@ class CreateBook extends Component {
             placeholder="Adicionar licenciante"
             autofocus={false}
           />
+
+          {showLicensorModal ? (
+            <div className="Modal">
+              <input
+                type="text"
+                name="licensorName"
+                placeholder="Novo Licenciante"
+                onChange={this.handleChange}
+                value={licensorName}
+              />
+              <button type="button" className="button button--small" onClick={this.createLicensor}>Cadastrar </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="button button--small"
+              onClick={() => { this.setState({ showLicensorModal: !showLicensorModal }); }}
+            >
+            Criar Novo Licenciante
+            </button>
+          ) }
 
           <p>Editoras</p>
           <ReactTags
@@ -324,7 +533,29 @@ class CreateBook extends Component {
             autofocus={false}
           />
 
-          <button type="submit" className="submit button">Enviar</button>
+          {showPublisherModal ? (
+            <div className="Modal">
+              <input
+                type="text"
+                name="publisherName"
+                placeholder="Nova Editora"
+                onChange={this.handleChange}
+                value={publisherName}
+              />
+              <button type="button" className="button button--small" onClick={this.createPublisher}>Cadastrar </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="button button--small"
+              onClick={() => { this.setState({ showPublisherModal: !showPublisherModal }); }}
+            >
+            Criar Nova Editora
+            </button>
+          ) }
+          <div className="inputgroup">
+            <button type="submit" className="submit button">Enviar</button>
+          </div>
         </form>
       </CreateBookContainer>
     );

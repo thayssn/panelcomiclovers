@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import queryString from 'query-string';
-import Cookies from 'universal-cookie';
 import api from '../../services/api';
+import { getUserToken, isLoggedIn } from '../../services/auth';
 import env from '../../env';
 
 // using styled-components
 import BooksList from './style';
-
-const cookies = new Cookies();
 
 class Books extends Component {
   state = {
@@ -17,17 +15,11 @@ class Books extends Component {
     total: 0,
     collection: null,
     searchTerm: '',
-    redirect: false,
   }
 
   async componentDidMount() {
     try {
-      const userToken = cookies.get('userToken');
-      if (!userToken) {
-        (
-          this.setState({ redirect: true })
-        );
-      }
+      const userToken = getUserToken();
       const whereParams = { status: 'Aprovado' };
       const { data: { total, books } } = await api.get('books', {
         headers: {
@@ -72,7 +64,7 @@ class Books extends Component {
     const { history } = this.props;
     const selectedBooks = books.filter(book => book.selected).map(book => book.id);
     try {
-      const userToken = cookies.get('userToken');
+      const userToken = getUserToken();
       await api.put(`collections/${collection.id}/books`, {
         books: selectedBooks,
       }, {
@@ -115,12 +107,12 @@ class Books extends Component {
 
   render() {
     const {
-      books, total, collection, searchTerm, redirect,
+      books, total, collection, searchTerm,
     } = this.state;
     const selectedBooks = books.filter(book => book.selected);
     return (
       <BooksList>
-        {redirect && <Redirect to="/login" />}
+        { !isLoggedIn() && <Redirect to="/login" />}
         <header>
           { collection
             ? (

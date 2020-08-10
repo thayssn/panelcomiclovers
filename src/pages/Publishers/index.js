@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import api from '../../services/api';
+import { isLoggedIn } from '../../services/auth';
+
 
 // using styled-components
 import PublishersList from './style';
@@ -19,6 +21,7 @@ class Publishers extends Component {
     const { publishers } = this.state;
     return (
       <PublishersList>
+        { !isLoggedIn() && <Redirect to="/login" /> }
         <header>
           <h1>Editoras</h1>
           <div>

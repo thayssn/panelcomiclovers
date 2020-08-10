@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import Cookies from 'universal-cookie';
 import { Link, Redirect } from 'react-router-dom';
 import api from '../../services/api';
 import env from '../../env';
+import { isLoggedIn, getUserToken } from '../../services/auth';
 
 // using styled-components
 import CollectionsList from './style';
 
-const cookies = new Cookies();
 class Collections extends Component {
   state = {
     collections: [],
-    error: null,
   }
 
   async componentDidMount() {
-    const userToken = cookies.get('userToken');
+    const userToken = getUserToken();
 
     try {
       const { data: collections } = await api.get('public/collections',
@@ -26,24 +24,21 @@ class Collections extends Component {
         });
       this.setState({ collections });
     } catch (err) {
-      this.setState({ error: { code: 401 } });
       console.log(err);
     }
   }
 
   render() {
-    const { collections, error } = this.state;
+    const { collections } = this.state;
     return (
       <CollectionsList>
+        { !isLoggedIn() && <Redirect to="/login" /> }
         <header>
           <h1>Coleções Públicas</h1>
           <div>
             <Link to="/collections/create" className="button">Adicionar coleção pública</Link>
           </div>
         </header>
-        { error && error.code === 401 && (
-          <Redirect to="/login" />
-        )}
         { collections.map(collection => (
           <article className="collection" key={collection.id}>
             <div className="collection__thumbnail">
