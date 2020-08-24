@@ -42,6 +42,7 @@ class CreateBook extends Component {
     publisherName: '',
     showLicensorModal: false,
     licensorName: '',
+    type: 'Quadrinho',
   };
 
   async componentDidMount() {
@@ -97,6 +98,7 @@ class CreateBook extends Component {
       selectedWriters,
       selectedLicensors,
       selectedPublishers,
+      type,
     } = this.state;
 
     const payload = {
@@ -114,6 +116,8 @@ class CreateBook extends Component {
       writers: selectedWriters.map(i => i.id),
       licensors: selectedLicensors.map(i => i.id),
       publishers: selectedPublishers.map(i => i.id),
+      status: 'Aprovado',
+      type,
     };
 
     data.append('jsonPayload', JSON.stringify(payload));
@@ -133,10 +137,13 @@ class CreateBook extends Component {
   }
 
   handleFileChange = (e) => {
-    this.setState({ image: e.target.files[0], preview: URL.createObjectURL(e.target.files[0]) });
+    if (e.target.files.length) {
+      this.setState({ image: e.target.files[0], preview: URL.createObjectURL(e.target.files[0]) });
+    }
   }
 
   handleChange = (e) => {
+    console.log(e.target.value);
     this.setState({ [e.target.name]: e.target.value });
   }
 
@@ -284,7 +291,7 @@ class CreateBook extends Component {
       showColoristModal, coloristName,
       showWriterModal, writerName,
       showPublisherModal, publisherName,
-      showLicensorModal, licensorName,
+      showLicensorModal, licensorName, type,
     } = this.state;
 
     return (
@@ -302,6 +309,18 @@ class CreateBook extends Component {
               onChange={this.handleFileChange}
             />
           </div>
+
+          <p>Tipo</p>
+          <select
+            name="type"
+            placeholder="Selecione"
+            onChange={this.handleChange}
+            value={type}
+          >
+            <option value="Quadrinho">Quadrinho</option>
+            <option value="Mangá">Mangá</option>
+          </select>
+
           <p>ISBN-13</p>
           <input
             type="text"

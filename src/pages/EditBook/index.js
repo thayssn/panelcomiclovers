@@ -13,6 +13,7 @@ class EditBook extends Component {
     originalBook: {},
     preview: null,
     image: null,
+    type: '',
     isbn: '',
     isbn_10: '',
     title: '',
@@ -102,6 +103,7 @@ class EditBook extends Component {
       isbn,
       isbn_10,
       title,
+      type,
       description,
       edition,
       price,
@@ -117,6 +119,10 @@ class EditBook extends Component {
 
     const payload = {
     };
+
+    if (type !== originalBook.type) {
+      payload.type = type;
+    }
 
     if (isbn !== originalBook.isbn) {
       payload.isbn = isbn;
@@ -229,7 +235,7 @@ class EditBook extends Component {
       illustrators, colorists, writers, licensors, publishers,
       selectedIllustrators, selectedColorists, selectedWriters,
       selectedLicensors, selectedPublishers,
-      originalBook,
+      originalBook, type,
     } = this.state;
 
     return (
@@ -254,6 +260,18 @@ class EditBook extends Component {
               onChange={this.handleFileChange}
             />
           </div>
+
+          <p>Tipo</p>
+          <select
+            name="type"
+            placeholder="Selecione"
+            onChange={this.handleChange}
+            value={type}
+          >
+            <option value="Quadrinho">Quadrinho</option>
+            <option value="Mangá">Mangá</option>
+          </select>
+
           <p>ISBN-13</p>
           <input
             type="text"
